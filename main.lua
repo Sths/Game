@@ -59,10 +59,10 @@ end
 -- TODO
 function love.load()
 
-	source = love.audio.newSource("1.mp3", "stream")
+	source = love.audio.newSource("res/chores/1.mp3", "stream")
 	love.audio.play(source)
 
-	image = love.graphics.newImage("3.jpg")
+	image = love.graphics.newImage("res/chores/3.jpg")
 	love.window.setTitle("Secret Base")
 
 	ll_button_title["start_game"] = Button:new{deltax = 10, deltay = 20, width = 200, height = 150}
