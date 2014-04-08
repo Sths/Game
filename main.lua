@@ -18,7 +18,7 @@ ll_mouse_buttonFocus = nil
 function love.draw()
 	if (ll_game_scene == "title") then
 		love.graphics.print("Passing Time : " .. tostring(count), 0, 0)
-		love.graphics.print(mouse_x .. ", " .. mouse_y .. ", " .. mouse_button, 100, 500)
+		--love.graphics.print(mouse_x .. ", " .. mouse_y .. ", " .. mouse_button, 100, 500)
 		--love.graphics.draw(image, love.mouse.getX(), love.mouse.getY(), 0, 100 / image:getWidth(), 75 / image:getHeight())
 		ll_button_title["start_game"]:draw()
 	end
