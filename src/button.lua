@@ -3,7 +3,11 @@ Button = {
 	deltay = 0,
 	width = 0,
 	height = 0,
-	images = {},
+	images = {
+		normal = nil,
+		pressed = nil,
+		focused = nil
+	},
 	beFocused = false,
 	bePressed = false
 }
@@ -43,6 +47,7 @@ function Button:offFocus(x, y)
 end
 
 function Button:loadImage(path, type)
+	self.images = {}
 	self.images['normal'] = love.graphics.newImage(path .. "normal" .. type)
 	self.images['pressed'] = love.graphics.newImage(path .. "pressed" .. type)
 	self.images['focused'] = love.graphics.newImage(path .. "focused" .. type)

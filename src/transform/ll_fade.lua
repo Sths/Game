@@ -1,0 +1,3 @@
+ll_Fade = {
+	target
+}
