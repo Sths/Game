@@ -18,6 +18,7 @@ ll_transform_title = {}
 
 -- Mouse
 ll_mouse_buttonPressed = nil
+ll_mouse_buttonPressed_type = "l"
 ll_mouse_buttonFocus = nil
 ll_mouse_buttonReleased = nil
 
@@ -47,20 +48,20 @@ function love.draw()
 end
 
 function love.mousepressed(x, y, button)
-	mouse_x = x
-	mouse_y = y
-	mouse_button = button
-	if button == "l" then
-		--if (ll_button_title["start_game"]:contains(x, y)) then
-		--	ll_button_title["start_game"]:onPress(x, y)
-		--	ll_mouse_buttonPressed = ll_button_title["start_game"]
-		--end
+	ll_mouse_buttonPressed_type = button
+	if ll_game_scene == "title" then
+		for i, _button in pairs(ll_button_title) do
+			if _button:contains(x, y) then
+				ll_mouse_buttonPressed = _button
+			end
+		end
 	end
 end
 
 function love.mousereleased(x, y)
 	if (ll_mouse_buttonPressed) then
 		ll_mouse_buttonReleased = ll_mouse_buttonPressed
+		ll_mouse_buttonPressed = nil
 	end
 end
 
@@ -81,7 +82,7 @@ function love.update(dt)
 
 	-- Mouse 
 
-	-- Mouse focus
+	-- Mouse Focus
 	if ll_game_scene == "title" then
 		local ll_mouse_buttonFocus_new = nil
 		for i, _button in pairs(ll_button_title) do
@@ -98,6 +99,18 @@ function love.update(dt)
 			end
 			ll_mouse_buttonFocus = ll_mouse_buttonFocus_new
 		end
+	end
+
+	-- Mouse Release
+	if ll_mouse_buttonReleased then
+		love.window.setTitle("!!!")
+		ll_mouse_buttonReleased:onRelease()
+		ll_mouse_buttonReleased = nil
+	end
+
+	-- Mouse Pressed
+	if ll_mouse_buttonPressed then
+		ll_mouse_buttonPressed:onPress()
 	end
 end
 -- TODO
@@ -182,7 +195,7 @@ function love.load()
 	ll_button_title["leave"].offFocus = function(x, y) 
 		ll_transform_title["leave_circle"]:stop()
 	end
-	ll_button_title["leave"].onRelease = function()
+	ll_button_title["leave"].onRelease = function(self)
 		love.event.quit()
 	end
 
