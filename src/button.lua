@@ -9,7 +9,8 @@ Button = {
 		focused = nil
 	},
 	beFocused = false,
-	bePressed = false
+	bePressed = false,
+	alpha = 1
 }
 
 function Button:new(o)
@@ -20,9 +21,9 @@ function Button:new(o)
 end
 
 function Button:contains(x, y)
-	local x_lb = self.deltax
+	local x_lb = self.deltax - self.width * self.ox
 	local x_ub = self.deltax + self.width
-	local y_lb = self.deltay
+	local y_lb = self.deltay - self.height * self.oy
 	local y_ub = self.deltay + self.height
 	if x >= x_lb and x < x_ub and y >= y_lb and y < y_ub then
 		return true
@@ -64,5 +65,12 @@ function Button:draw()
 			image_to_draw = self.images["normal"]
 		end
 	end
-	love.graphics.draw(image_to_draw, self.deltax, self.deltay, 0,  self.width / image_to_draw:getWidth(), self.height / image_to_draw:getHeight())
+	love.graphics.setColor(255, 255, 255, 255 * self.alpha)
+	love.graphics.draw(
+		image_to_draw, self.deltax, self.deltay, 0,
+		self.width / image_to_draw:getWidth(), self.height / image_to_draw:getHeight(),
+		image_to_draw:getWidth() * self.ox, 
+		image_to_draw:getHeight() * self.oy
+		)
+	love.graphics.setColor(255, 255, 255, 255)
 end

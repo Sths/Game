@@ -5,7 +5,8 @@ ll_Image = {
 	width = 0,
 	height = 0,
 	image = nil,
-	beRotated = 0
+	beRotated = 0,
+	alpha = 1
 }
 
 function ll_Image:new(o)
@@ -16,10 +17,15 @@ function ll_Image:new(o)
 end
 
 function ll_Image:draw()
+	love.graphics.setColor(255, 255, 255, 255 * self.alpha)
+	if (self.alpha ~= 0) then
+		print(self.alpha)
+	end
 	love.graphics.draw(
-		self.image, self.x + self.width / 2, self.y + self.height / 2, self.r + self.beRotated, 
+		self.image, self.x, self.y, self.r + self.beRotated, 
 		self.width / self.image:getWidth(), self.height / self.image:getHeight(),
-		self.image:getWidth() / 2, 
-		self.image:getHeight() / 2
+		self.image:getWidth() * self.ox, 
+		self.image:getHeight() * self.oy
 		)
+	love.graphics.setColor(255, 255, 255, 255)
 end

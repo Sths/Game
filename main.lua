@@ -2,7 +2,7 @@
 require "src/button"
 require "src/ll_image"
 require "src/transform/ll_rotate"
-
+require "src/transform/ll_fade"
 -- Variables
 count = 0
 currentTime = 0
@@ -125,28 +125,28 @@ function love.load()
 	-- Title
 
 	ll_image_title["background"] = ll_Image:new{
-		x = 0, y = 0, r = 0, width = 1120, height = 630, depth = -10,
+		x = 0, y = 0, r = 0, width = 1120, height = 630, depth = -10, ox = 0, oy = 0,
 		image = love.graphics.newImage("res/backgrounds/bg_0.png")
 	}
 	ll_image_title["title"] = ll_Image:new{
-		x = 850, y = 50, r = 0, width = 200, height = 100, depth = 0,
+		x = 850, y = 50, r = 0, width = 200, height = 100, depth = 0, ox = 0, oy = 0,
 		image = love.graphics.newImage("res/backgrounds/title_0.png")
 	}
 
 	ll_image_title["register_circle"] = ll_Image:new{
-		x = 640, y = 310, r = 0, width = 70, height = 70, depth = 20,
+		x = 675, y = 345, r = 0, width = 70, height = 70, depth = 20, ox = 0.5, oy = 0.5,
 		image = love.graphics.newImage("res/chores/circle_1.png")
 	}
 	ll_image_title["login_circle"] = ll_Image:new{
-		x = 740, y = 310, r = 0, width = 70, height = 70, depth = 20,
+		x = 775, y = 345, r = 0, width = 70, height = 70, depth = 20, ox = 0.5, oy = 0.5,
 		image = love.graphics.newImage("res/chores/circle_1.png")
 	}
 	ll_image_title["info_circle"] = ll_Image:new{
-		x = 840, y = 310, r = 0, width = 70, height = 70, depth = 20,
+		x = 875, y = 345, r = 0, width = 70, height = 70, depth = 20, ox = 0.5, oy = 0.5,
 		image = love.graphics.newImage("res/chores/circle_1.png")
 	}
 	ll_image_title["leave_circle"] = ll_Image:new{
-		x = 940, y = 310, r = 0, width = 70, height = 70, depth = 20,
+		x = 975, y = 345, r = 0, width = 70, height = 70, depth = 20, ox = 0.5, oy = 0.5,
 		image = love.graphics.newImage("res/chores/circle_1.png")
 	}
 
@@ -163,40 +163,82 @@ function love.load()
 		cycle = -3, target = ll_image_title["leave_circle"], paused = true
 	}
 
-	ll_button_title["register"] = Button:new{deltax = 650, deltay = 320, width = 50, height = 50, depth = 10}
+	ll_button_title["register"] = Button:new{deltax = 675, deltay = 320, width = 50, height = 50, depth = 10, ox = 0.5, oy = 0}
 	ll_button_title["register"]:loadImage("res/buttons/title/register/", ".png")
 	ll_button_title["register"].onFocus = function(x, y) 
 		ll_transform_title["register_circle"]:continue()
+		ll_transform_title["register_extense_fade"]:continue()
 	end
 	ll_button_title["register"].offFocus = function(x, y) 
 		ll_transform_title["register_circle"]:stop()
+		ll_transform_title["register_extense_fade"]:cancel()
 	end
-	ll_button_title["login"] = Button:new{deltax = 750, deltay = 320, width = 50, height = 50, depth = 10}
+	ll_button_title["login"] = Button:new{deltax = 775, deltay = 320, width = 50, height = 50, depth = 10, ox = 0.5, oy = 0}
 	ll_button_title["login"]:loadImage("res/buttons/title/login/", ".png")
 	ll_button_title["login"].onFocus = function(x, y) 
 		ll_transform_title["login_circle"]:continue()
+		ll_transform_title["login_extense_fade"]:continue()
 	end
 	ll_button_title["login"].offFocus = function(x, y) 
 		ll_transform_title["login_circle"]:stop()
+		ll_transform_title["login_extense_fade"]:cancel()
 	end
-	ll_button_title["info"] = Button:new{deltax = 850, deltay = 320, width = 50, height = 50, depth = 10}
+	ll_button_title["info"] = Button:new{deltax = 875, deltay = 320, width = 50, height = 50, depth = 10, ox = 0.5, oy = 0}
 	ll_button_title["info"]:loadImage("res/buttons/title/info/", ".png")
 	ll_button_title["info"].onFocus = function(x, y) 
 		ll_transform_title["info_circle"]:continue()
+		ll_transform_title["info_extense_fade"]:continue()
 	end
 	ll_button_title["info"].offFocus = function(x, y) 
 		ll_transform_title["info_circle"]:stop()
+		ll_transform_title["info_extense_fade"]:cancel()
 	end
-	ll_button_title["leave"] = Button:new{deltax = 950, deltay = 320, width = 50, height = 50, depth = 10}
+	ll_button_title["leave"] = Button:new{deltax = 975, deltay = 320, width = 50, height = 50, depth = 10, ox = 0.5, oy = 0}
 	ll_button_title["leave"]:loadImage("res/buttons/title/leave/", ".png")
 	ll_button_title["leave"].onFocus = function(x, y) 
 		ll_transform_title["leave_circle"]:continue()
+		ll_transform_title["leave_extense_fade"]:continue()
 	end
 	ll_button_title["leave"].offFocus = function(x, y) 
 		ll_transform_title["leave_circle"]:stop()
+		ll_transform_title["leave_extense_fade"]:cancel()
 	end
 	ll_button_title["leave"].onRelease = function(self)
 		love.event.quit()
 	end
+
+	ll_image_title["register_extense"] = ll_Image:new{
+		x = 675, y = 390, r = 0, width = 40, height = 150, depth = 10, ox = 0.5, oy = 0, alpha = 0,
+		image = love.graphics.newImage("res/buttons/title/register/extense.png")
+	}
+	ll_image_title["login_extense"] = ll_Image:new{
+		x = 775, y = 390, r = 0, width = 40, height = 150, depth = 10, ox = 0.5, oy = 0, alpha = 0,
+		image = love.graphics.newImage("res/buttons/title/login/extense.png")
+	}
+	ll_image_title["info_extense"] = ll_Image:new{
+		x = 875, y = 390, r = 0, width = 40, height = 150, depth = 10, ox = 0.5, oy = 0, alpha = 0,
+		image = love.graphics.newImage("res/buttons/title/info/extense.png")
+	}
+	ll_image_title["leave_extense"] = ll_Image:new{
+		x = 975, y = 390, r = 0, width = 40, height = 150, depth = 10, ox = 0.5, oy = 0, alpha = 0,
+		image = love.graphics.newImage("res/buttons/title/leave/extense.png")
+	}
+
+	ll_transform_title["register_extense_fade"] = ll_Fade:new{
+		fadeFrom = 0, fadeTo = 1, period = 1, paused = true,
+		target = ll_image_title["register_extense"]
+	}
+	ll_transform_title["login_extense_fade"] = ll_Fade:new{
+		fadeFrom = 0, fadeTo = 1, period = 1, paused = true,
+		target = ll_image_title["login_extense"]
+	}
+	ll_transform_title["info_extense_fade"] = ll_Fade:new{
+		fadeFrom = 0, fadeTo = 1, period = 1, paused = true,
+		target = ll_image_title["info_extense"]
+	}
+	ll_transform_title["leave_extense_fade"] = ll_Fade:new{
+		fadeFrom = 0, fadeTo = 1, period = 1, paused = true,
+		target = ll_image_title["leave_extense"]
+	}
 
 end
