@@ -103,7 +103,6 @@ function love.update(dt)
 
 	-- Mouse Release
 	if ll_mouse_buttonReleased then
-		love.window.setTitle("!!!")
 		ll_mouse_buttonReleased:onRelease()
 		ll_mouse_buttonReleased = nil
 	end

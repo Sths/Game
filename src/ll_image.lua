@@ -18,9 +18,6 @@ end
 
 function ll_Image:draw()
 	love.graphics.setColor(255, 255, 255, 255 * self.alpha)
-	if (self.alpha ~= 0) then
-		print(self.alpha)
-	end
 	love.graphics.draw(
 		self.image, self.x, self.y, self.r + self.beRotated, 
 		self.width / self.image:getWidth(), self.height / self.image:getHeight(),
