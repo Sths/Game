@@ -3,6 +3,9 @@ require "src/button"
 require "src/ll_image"
 require "src/transform/ll_rotate"
 require "src/transform/ll_fade"
+require "src/constants"
+require "src/slither"
+require "src/lube"
 -- Variables
 count = 0
 currentTime = 0
@@ -21,6 +24,8 @@ ll_mouse_buttonPressed = nil
 ll_mouse_buttonPressed_type = "l"
 ll_mouse_buttonFocus = nil
 ll_mouse_buttonReleased = nil
+
+client = nil
 
 function love.draw()
 	if (ll_game_scene == "title") then
@@ -111,7 +116,12 @@ function love.update(dt)
 	if ll_mouse_buttonPressed then
 		ll_mouse_buttonPressed:onPress()
 	end
+
+	-- networking
+	client:update(dt)
 end
+
+
 -- TODO
 function love.load()
 
@@ -240,4 +250,17 @@ function love.load()
 		target = ll_image_title["leave_extense"]
 	}
 
+
+	-- networking
+	protocolClient = common.class("myClient", {}, lube.tcpClient)
+	protocolClient.implemented = true
+	client = protocolClient
+	local success, err = client:connect(server_addr, server_port)
+	print(success)
+	client.callbacks = {
+		recv = function(data)
+			print(data)
+		end
+	}
 end
+
