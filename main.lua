@@ -25,8 +25,6 @@ ll_mouse_buttonPressed_type = "l"
 ll_mouse_buttonFocus = nil
 ll_mouse_buttonReleased = nil
 
-client = nil
-
 function love.draw()
 	if (ll_game_scene == "title") then
 		love.graphics.print("Passing Time : " .. tostring(count), 0, 0)
